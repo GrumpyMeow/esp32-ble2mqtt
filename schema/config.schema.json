@@ -1,0 +1,170 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://example.com/config.schema.json",
+    "title": "esp32-ble2mqtt configuration schema",
+    "description": "A configuration",
+    "type": "object",
+    "properties": {
+        "wifi": {
+            "description": "The WiFi configuration",
+            "type": "object",
+            "properties": {
+                "ssid": {
+                    "type": "string",
+                    "description": "The WiFi SSID the ESP32 should connect to",
+                },
+                "password": {
+                    "type": "string",
+                    "description": "The security password for the above network",
+                },
+                "eap": {
+                    "description": "WPA-Enterprise configuration (for enterprise networks only)",
+                    "type": "object",
+                    "properties": {
+                        "method": {
+                            "type": "string",
+                            "enum": [
+                                "TLS",
+                                "PEAP",
+                                "TTLS"
+                            ]
+                        },
+                        "identity": {
+                            "type": "string",
+                            "description": "The EAP identity"
+                        },
+                        "client_cert": {
+                            "type": "string",
+                            "description": "Full path names, including a leading slash (/), of the certificate/key file (in PEM format) stored under the data folder"
+                        },
+                        "client_key": {
+                            "type": "string",
+                            "description": "Full path names, including a leading slash (/), of the certificate/key file (in PEM format) stored under the data folder"
+                        },
+                        "server_cert": {
+                            "type": "string",
+                            "description": "Full path names, including a leading slash (/), of the certificate/key file (in PEM format) stored under the data folder"
+                        },
+                        "username": {
+                            "type": "string",
+                            "description": "EAP login credentials"
+                        },
+                        "password": {
+                            "type": "string",
+                            "description": "EAP login credentials"
+                        }
+                    }
+                }
+            },
+            "required": [
+                "ssid"
+            ]
+        },
+        "mqtt": {
+            "description": "The MQTT configuration",
+            "type": "object",
+            "properties": {
+                "server": {
+                    "description": "The MQTT server configuration",
+                    "type": "object",
+                    "properties": {
+                        "host": {},
+                        "port": {},
+                        "username": {},
+                        "password": {},
+                        "client_id": {}
+                    }
+                },
+                "publish": {
+                    "description": "Configuration for publishing topics",
+                    "type": "object",
+                    "properties": {
+                        "retain": {
+                            "type": "boolean",
+                        },
+                        "qos": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "topics": {
+                    "type": "object",
+                    "properties": {
+                        "prefix": {
+                            "type": "string"
+                        },
+                        "get_suffix": {
+                            "type": "string"
+                        },
+                        "set_suffix": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "required": [
+                "server"
+            ]
+        },
+        "ble": {
+            "type": "object",
+            "properties": {
+                "whitelist": {
+                    "type": "array"
+                },
+                "blacklist": {
+                    "type": "array"
+                },
+                "services": {
+                    "type": "object",
+                    "properties": {
+                        "definitions": {
+                            "properties": {
+                                "$id": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "whitelist": {},
+                        "blacklist": {}
+                    }
+                },
+                "characteristics": {
+                    "type": "object",
+                    "properties": {
+                        "definitions": {},
+                        "whitelist": {
+                            "type": "array"
+                        },
+                        "blacklist": {
+                            "type": "array"
+                        }
+                    }
+                },
+                "passkeys": {}
+            }
+        },
+        "log": {
+            "type": "object",
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "The hostname or IP address to send the logs to. In case of an IP address, this may be a unicast, broadcast or multicast address"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "The destination UDP port"
+                }
+            }
+        }
+    },
+    "required": [
+        "wifi",
+        "mqtt"
+    ]
+}
