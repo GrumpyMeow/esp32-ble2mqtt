@@ -17,7 +17,6 @@
 	},
 	"extensions": {
 		"recommendations": [
-			"ms-python.python",
 			"espressif.esp-idf-extension"
 		]
 	}
